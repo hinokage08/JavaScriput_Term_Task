@@ -14,11 +14,9 @@ $(document).ready(function(){
                           ];
 
     // さらにこのような記述をすることで、「合計点：」となっている右の部分に合計点が出力される
-    let sum = subject_points[0];
-    sum = sum + subject_points[1];
-    sum = sum + subject_points[2];
-    sum = sum + subject_points[3];
-    sum = sum + subject_points[4];
+    let sum = subject_points.reduce(function(a,b){
+      return a + b;
+    })
     // ⑥指定さてたidのテキスト情報を合計点に書き換える。
     $("#sum_indicate").text(sum);
 
@@ -61,8 +59,8 @@ $(document).ready(function(){
         judge = "不合格";
         break;
       }
-      return judge;
     }
+      return judge;
   }
 
 
@@ -72,6 +70,7 @@ $(document).ready(function(){
     let rank = $('#evaluation').text();
     let pass_or_fail = $('#judge').text();
     // ⑦.appendは指定した要素内の最後に引数のコンテンツを追加するメソッド
+    $('#alert-indicate').remove();
     $('#declaration').append(`<label id="alert-indicate" class="alert alert-info">あなたの成績は${rank}です。${pass_or_fail}です</label>`);
   };
 
@@ -86,6 +85,9 @@ $(document).ready(function(){
 
   $('#btn-judge').click(function() {
     $('#judge').text(get_pass_or_failure());
+  });
+  $('#btn-declaration').click(function() {
+    judgement();
   });
 });
 // ここに書かれているjsの記述はあくまでヒントとして用意された雛形なので、書かれている記述に従わずに実装したいという場合は、自分の好きに実装して構わない。課題要件を満たし、コードの品質が一定の水準にあると判定されればどのような実装でも合格になる。
